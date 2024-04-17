@@ -12,8 +12,52 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     socket.on('chat message', (payload) => {
+        // Recupere l'élément span contenant le nb d'users
+        const nbUser= document.getElementById('nb_user')
+        nbUser.innerText = payload.nbUser
 
-        // Cr
+        // Créer un élément div qui va contenir les icones
+        const likeBtn = document.createElement('button');
+        
+        // Attribution d'une class
+        likeBtn.classList.add('like-button');
+
+        // Attribution d'une class
+        likeBtn.innerText ="Like"
+
+        // Créer un élément div qui va contenir les icones
+        const blockIcon = document.createElement('div');
+
+        // Attribution d'une class
+        blockIcon.classList.add('icon-selector');
+
+        // Attribution d'une propriété css 
+        blockIcon.style.display = "none";
+
+        // Créer les élément img qui contiendront les icones
+        const icon1 = document.createElement('img');
+        const icon2 = document.createElement('img');
+        const icon3 = document.createElement('img');
+
+        // Ajout de la class icon
+        icon1.classList.add('icon');
+        icon2.classList.add('icon');
+        icon3.classList.add('icon');
+
+        // Attribution du chemin des icones 
+        icon1.src = "./icons/coeur.svg"
+        icon2.src = "./icons/sourire.svg"
+        icon3.src = "./icons/malheureux.svg"
+
+        // Attribution du chemin des icones 
+        icon1.dataIcon ="icon1"
+        icon2.dataIcon ="icon2"
+        icon3.dataIcon ="icon3"
+
+        // Ajouter les icones dans la div
+        blockIcon.appendChild(icon1);
+        blockIcon.appendChild(icon2);
+        blockIcon.appendChild(icon3);
 
         // Créer un élément div pour le message
         const item = document.createElement('div');
@@ -33,10 +77,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
         // Appliquer une couleur
         if (!USERS.hasOwnProperty(payload.id)) {
             USERS[payload.id] = {
-                color: getRandomColor()
+                color: getRandomColor(),
+                class : "test"
             }
         }
         item.style.color = USERS[payload.id].color
+        item.classList.add('message-form');
         
         // Créer un noeud texte sécurisé pour le message
         const textNodeUser = document.createTextNode(`${payload.id}`);
@@ -62,7 +108,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
         // Ajouter la date au conteneur span
         messageDate.appendChild(timeString);
-        messageDate.style.paddingRight = 
+        messageDate.style.marginLeft = "50px"
 
         // Ajouter le texte au conteneur span
         messageText.appendChild(textNodeMessage);
@@ -71,9 +117,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         item.appendChild(userid);
         item.appendChild(messageText);
         item.appendChild(messageDate);
-        
+        item.appendChild(likeBtn);
+        item.appendChild(blockIcon);
+
         // Ajouter le message à la liste
         document.getElementById('messages').appendChild(item);
+
+        //alert("Nouveau message de " + payload.id + ": " + payload.msg);
         
         // Faire défiler vers le bas pour afficher le nouveau message
         window.scrollTo(0, document.body.scrollHeight);
@@ -89,7 +139,8 @@ function getRandomColor() {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
-  }
+}
+
 
 
 function deleteMessage(id){

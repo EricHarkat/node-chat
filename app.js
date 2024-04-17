@@ -12,7 +12,7 @@ app.use(express.static('public'));
 
 // Route de l'index
 app.get('/', (req, res) => {
-  res.render('index', { title: 'Chat en direct', message: 'La chatte en direct!', nombre : nbUser });
+  res.render('index', { title: 'Chat en direct', message1: 'La', message2: 'en direct!', nombre : nbUser });
 });
 
 
@@ -29,11 +29,13 @@ io.on('connection', (socket) => {
   });
 
   socket.on('chat message', (msg) => {
-    io.emit('chat message', {
-        id: socket.id,
-        msg: msg,
-        nbUser: nbUser
-    } );
+    if(msg && msg.trim() != ""){
+        io.emit('chat message', {
+            id: socket.id,
+            msg: msg,
+            nbUser: nbUser
+        } );
+    }
   });
 });
 

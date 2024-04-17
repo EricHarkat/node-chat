@@ -1,5 +1,20 @@
+@font-face {
+    font-family: Jersey;
+    src: url(../font/Jersey10Charted-Regular.ttf);
+}
+
+@font-face {
+    font-family: EXO2;
+    src: url(../font/Exo2-VariableFont_wght.ttf);
+}
+
 body{
-    background-color: blue;
+    background-color: #fafafa;
+    font-family: "EXO2";
+}
+
+.title{
+    text-align: center;
 }
 
 li{
@@ -9,3 +24,25 @@ li{
 #messages{
     margin-top: 100px;
 }
+
+.message-form{
+    border: 1px solid rgb(75, 71, 71);
+    border-radius: .25rem;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.image{
+    max-width: 50px;
+}
+
+.icon {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    margin: 5px;
+  }
+  
+  .icon:hover {
+    opacity: 0.8;
+  }
