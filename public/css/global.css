@@ -11,14 +11,16 @@
 body{
     background-color: #fafafa;
     font-family: "EXO2";
+    color:#fafafa; ;
+}
+
+.container-fluid{
+    background-color: #666363;
+    min-height: 100vh;
 }
 
 .title{
     text-align: center;
-}
-
-li{
-    border: solid 1px black;
 }
 
 #messages{
@@ -26,7 +28,7 @@ li{
 }
 
 .message-form{
-    border: 1px solid rgb(75, 71, 71);
+    border: 1px solid rgb(124, 121, 121);
     border-radius: .25rem;
     margin-bottom: 20px;
     padding: 10px;
@@ -43,6 +45,20 @@ li{
     margin: 5px;
   }
   
-  .icon:hover {
-    opacity: 0.8;
-  }
+.icon:hover {
+opacity: 0.8;
+}
+
+.users{
+    border-right: 1px solid black;
+    min-height: 100vh;
+}
+
+.tag{
+    width:70px
+}
+
+.flex-container {
+    display: flex;  
+    align-items: center;
+}

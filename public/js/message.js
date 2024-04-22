@@ -16,11 +16,122 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const nbUser= document.getElementById('nb_user')
         nbUser.innerText = payload.nbUser
 
+        // creation d'un utlisateur avec ses propre porpiétés
+        if (!USERS.hasOwnProperty(payload.id)) {
+            USERS[payload.id] = {
+                color: getRandomColor(),
+                class : "test",
+                tag : payload.tag
+            }
+        }
+
+        // Ajouter le timestamp heure
+        const date = new Date();
+        const timeString = document.createElement('span');
+        timeString.style.fontSize = 'smaller';
+        timeString.style.opacity = '0.6';
+        timeString.textContent = date.toLocaleString('fr-FR', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false,
+        });
+
+        // Ajouter le timestamp jour
+        const dateString = document.createElement('span');
+        dateString.style.fontSize = 'smaller';
+        dateString.style.opacity = '0.6';
+        dateString.textContent = date.toLocaleString('fr-FR', {
+            day: '2-digit',    // Afficher le jour avec deux chiffres
+            month: '2-digit',  // Afficher le mois avec deux chiffres
+            year: 'numeric'    // Afficher l'année avec quatre chiffres
+        });
+
+
+        // Créer un élément div pour le message
+        const item = document.createElement('div');
+        item.classList.add('message-form');
+        
+
+        // Recupere l'élément <ul> et ajout un <li> contenant l'id utilissateur
+        /*for (let i of payload.users) {
+            const userList = document.getElementById('userlist')
+            for(let li of userList.childNodes){
+                if(li.innerText==i){
+                    console.log("zaza",li.innerText)
+                }else{
+                    
+                    const li = document.createElement('li')
+                    li.innerText = i
+                    userList.appendChild(li)
+                    console.log(userList.childNodes)
+                }
+            }
+            
+         }*/
+
+        
+
+
+        
+
+        // Créer un élément <div> pour afficher l'id user et son tag
+        const user = document.createElement('div');
+        user.classList.add('row');
+        const blockTag = document.createElement('div')
+        blockTag.classList.add('blocktag')
+        blockTag.classList.add('col-1')
+        const tag = document.createElement('img')   
+        tag.classList.add('tag')
+        tag.src = USERS[payload.id].tag
+        const colId = document.createElement('div')
+        colId.classList.add('col-11');
+        const rowId = document.createElement('div')
+        rowId.classList.add('flex-container')
+        const useridDiv = document.createElement('div')
+        const userid = document.createElement('div')
+        userid.classList.add('iduser')
+        // Créer un conteneur <div> pour contenir la date
+        const messageHour = document.createElement('div');
+        // Ajouter la date au conteneur span
+        messageHour.appendChild(timeString);
+        messageHour.style.marginLeft = "10px"
+        // Créer un conteneur <div> pour contenir la date
+        const messageDate = document.createElement('div');
+        // Ajouter la date au conteneur span
+        messageDate.appendChild(dateString);
+        messageDate.style.marginLeft = "20px"
+        // Créer un noeud texte sécurisé pour le message pour eviter le inner html
+        const textNodeUser = document.createTextNode(`${payload.id}`);
+        userid.appendChild(textNodeUser);
+        userid.style.color = USERS[payload.id].color
+        // Créer un conteneur <div> pour le texte du message
+        const blockText = document.createElement('div');
+        const messageText = document.createElement('p');
+        blockText.appendChild(messageText)
+        // Appliquer un id
+        messageText.id = payload.id;
+        // Créer un noeud texte sécurisé pour le message pour eviter le inner html
+        const textNodeMessage = document.createTextNode(`${payload.msg}`);
+        // Ajouter le texte au conteneur span
+        messageText.appendChild(textNodeMessage);
+        blockTag.appendChild(tag)
+        user.appendChild(blockTag)
+        user.appendChild(colId)
+        colId.appendChild(rowId)
+        useridDiv.appendChild(userid)
+        rowId.appendChild(useridDiv)
+        rowId.appendChild(messageDate)
+        rowId.appendChild(messageHour)
+        colId.appendChild(blockText)
+
+
         // Créer un élément div qui va contenir les icones
         const likeBtn = document.createElement('button');
         
         // Attribution d'une class
         likeBtn.classList.add('like-button');
+        likeBtn.classList.add('btn-primary');
 
         // Attribution d'une class
         likeBtn.innerText ="Like"
@@ -45,9 +156,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         icon3.classList.add('icon');
 
         // Attribution du chemin des icones 
-        icon1.src = "./icons/coeur.svg"
-        icon2.src = "./icons/sourire.svg"
-        icon3.src = "./icons/malheureux.svg"
+        icon1.src = "./public/icons/coeur.svg"
+        icon2.src = "./public/icons/sourire.svg"
+        icon3.src = "./public/icons/malheureux.svg"
 
         // Attribution du chemin des icones 
         icon1.dataIcon ="icon1"
@@ -58,65 +169,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
         blockIcon.appendChild(icon1);
         blockIcon.appendChild(icon2);
         blockIcon.appendChild(icon3);
-
-        // Créer un élément div pour le message
-        const item = document.createElement('div');
-
-        // Créer un élément li pour le message
-        const userid = document.createElement('h6');
         
-        // Créer un conteneur span pour le texte du message
-        const messageText = document.createElement('span');
-
-        // Créer un conteneur span pour le texte du message
-        const messageDate = document.createElement('span');
-
-        // Appliquer un id
-        messageText.id = payload.id;
-
-        // Appliquer une couleur
-        if (!USERS.hasOwnProperty(payload.id)) {
-            USERS[payload.id] = {
-                color: getRandomColor(),
-                class : "test"
-            }
-        }
-        item.style.color = USERS[payload.id].color
-        item.classList.add('message-form');
-        
-        // Créer un noeud texte sécurisé pour le message
-        const textNodeUser = document.createTextNode(`${payload.id}`);
-
-        // Créer un noeud texte sécurisé pour le message
-        const textNodeMessage = document.createTextNode(`${payload.msg}`);
-
-
-        // Ajouter le texte au conteneur span
-        userid.appendChild(textNodeUser);
-        
-        // Ajouter le timestamp
-        const date = new Date();
-        const timeString = document.createElement('span');
-        timeString.style.fontSize = 'smaller';
-        timeString.style.opacity = '0.6';
-        timeString.textContent = date.toLocaleString('fr-FR', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-        });
-
-        // Ajouter la date au conteneur span
-        messageDate.appendChild(timeString);
-        messageDate.style.marginLeft = "50px"
-
-        // Ajouter le texte au conteneur span
-        messageText.appendChild(textNodeMessage);
         
         // Ajouter le span au li
-        item.appendChild(userid);
-        item.appendChild(messageText);
-        item.appendChild(messageDate);
+        item.appendChild(user);
         item.appendChild(likeBtn);
         item.appendChild(blockIcon);
 

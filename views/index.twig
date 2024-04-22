@@ -4,20 +4,30 @@
     <title>{{ title }}</title>
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="/socket.io/socket.io.js"></script>
-    <script src="./js/color.js"></script>
-    <script src="./js/like.js"></script>
-    <script src="./js/message.js"></script>
+    <script src="./public/js/like.js"></script>
+    <script src="./public/js/message.js"></script>
 
-    <link rel='stylesheet' href='/css/global.css' />
+    <link rel='stylesheet' href='./public/css/global.css' />
 </head>
 <body>
-    <div class="container">
-        <h1 class="title">{{ message1 }}<span><img class="image" src="./logo/chat-noir.svg"></span>{{ message2 }}</h1>
-        <h5>Nombre d'utilisateur(s): <span id="nb_user">{{nombre}}</span></h5>
-        <div id="messages"></div>
-        <form class="form-group" action="">
-            <input id="m" autocomplete="off"  type="text" class="form-control" placeholder="Enter your message"><!--<button type="submit" class="btn btn-primary">Envoyer</button>-->
-        </form>
-    </div>  
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 users">
+                <h5 style="margin-top:100px">Nombre d'utilisateur(s): <span id="nb_user">{{nombre}}</span></h5>
+                <ul id="userlist" class="">
+                    {% for user in listUsers %}
+                        <li class="li-list-id">{{ user }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-10">
+                <h1 class="title">{{ message1 }}<span><img class="image" src="./public//logo/chat-noir.svg"></span>{{ message2 }}</h1>
+                <div id="messages"></div>
+                <form class="form-group" action="">
+                    <input id="m" autocomplete="off"  type="text" class="form-control" placeholder="Enter your message"><!--<button type="submit" class="btn btn-primary">Envoyer</button>-->
+                </form>
+            </div> 
+        </div>
+    </div> 
 </body>
 </html>
